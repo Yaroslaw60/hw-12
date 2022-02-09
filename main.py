@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import json
+
 app = Flask(__name__)
 
 
@@ -7,6 +8,7 @@ def open_candidates_file():
     with open("static/candidates.json", "rt", encoding="utf-8") as fp:
         data = json.load(fp)
         return data
+
 
 def open_settings_file():
     with open("static/settings.json", "rt", encoding="utf-8") as file:
@@ -22,6 +24,7 @@ def main_page():
     else:
         return "Приложение не работает"
 
+
 @app.route("/candidate/<int:x>")
 def candidate_page(x):
     candidates = open_candidates_file()
@@ -31,6 +34,7 @@ def candidate_page(x):
             break
         else:
             continue
+
 
 @app.route("/list")
 def candidate_list():
@@ -52,6 +56,29 @@ def search_name():
         list_name = [x["name"] for x in candidates if search in x["name"]]
         len_list = len(list_name)
         return render_template("search_page.html", list_name=list_name, len_list=len_list, candidates=candidates)
+
+
+@app.route("/skill/")
+def search_skill():
+    candidates = open_candidates_file()
+    settings = open_settings_file()
+    search = request.args.get("skill")
+    list_candidates = [x for x in candidates if search in x['skills'].lower().split(", ")]
+    limit_view = int(settings["limit"])
+    if len(list_candidates) > limit_view:
+        and_more = len(list_candidates) - limit_view
+        return render_template("search_skill.html",
+                               list_candidates=list_candidates[0:limit_view],
+                               limit_view=limit_view,
+                               search=search,
+                               and_more=and_more)
+    else:
+        return render_template("search_skill.html",
+                               list_candidates=list_candidates[0:limit_view],
+                               limit_view=limit_view,
+                               search=search,
+                               )
+
 
 
 

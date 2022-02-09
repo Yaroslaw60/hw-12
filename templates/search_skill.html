@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <main style ="width: 320px; margin: 0 auto;">
+        <h2>Найдено со скиллом "{{ search }}" </h2>
+        {% for person in list_candidates %}
+            <p><a href="/candidate/{{ person.id }}">{{ person.name }}</a></p>
+        {% endfor %}
+        {% if and_more %}
+            <p> И ещё {{ and_more }}, но мы вам их не покажем! </p>
+        {% endif %}
+
+</body>
+</html>
