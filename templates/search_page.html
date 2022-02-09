@@ -6,9 +6,11 @@
 </head>
 <body>
     <main style ="width: 320px; margin: 0 auto;">
-        <h1>Все кандидаты</h1>
+        <h2>Найдено кандидатов {{ len_list }}</h2>
         {% for person in candidates %}
-            <p><a href="/candidate/{{ person.id }}">{{ person.name }}</a></p>
+            {% if person.name in list_name %}
+                <p><a href="/candidate/{{ person.id }}">{{ person.name }}</a></p>
+            {% endif %}
         {% endfor %}
 
 

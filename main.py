@@ -38,7 +38,22 @@ def candidate_list():
     return render_template("list_candidates.html", candidates=candidates)
 
 
-@app.route("/search")
+@app.route("/search/")
+def search_name():
+    settings = open_settings_file()
+    candidates = open_candidates_file()
+    if settings['case-sensitive']:
+        search = request.args.get("name")
+        list_name = [x["name"] for x in candidates if search in x["name"].lower()]
+        len_list = len(list_name)
+        return render_template("search_page.html", list_name=list_name, len_list=len_list, candidates=candidates)
+    else:
+        search = request.args.get("name")
+        list_name = [x["name"] for x in candidates if search in x["name"]]
+        len_list = len(list_name)
+        return render_template("search_page.html", list_name=list_name, len_list=len_list, candidates=candidates)
+
+
 
 
 
