@@ -85,7 +85,7 @@ def search_skill():
                            list_candidates=list_candidates[0:limit_view],
                            limit_view=limit_view,
                            search=search,
-                           and_more=and_more)
+                           )
 
 
 app.run(debug=True)
