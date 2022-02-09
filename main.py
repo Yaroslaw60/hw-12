@@ -81,6 +81,11 @@ def search_skill():
                                limit_view=limit_view,
                                search=search,
                                and_more=and_more)
+    return render_template("search_skill.html",
+                           list_candidates=list_candidates[0:limit_view],
+                           limit_view=limit_view,
+                           search=search,
+                           and_more=and_more)
 
 
 app.run(debug=True)
